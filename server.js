@@ -8,19 +8,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('port', process.env.PORT || 3000);
 app.locals.title = 'URL Shortener';
-app.locals.urls = {};
+app.locals.urls = [];
 
 app.get('/', (request, response) => {
   response.send('visit /api/v1/urls/:id to view single url');
 });
 
-app.get('/api/v1/urls/:id', (request, response) => {
+app.get('/api/v1/urls', (request, response) => {
   const { id } = request.params;
-  const url = app.locals.urls[id]
+  const url = app.locals.urls
 
   if (!url) { return response.sendStatus(404); }
 
-  response.json({ id, url });
+  response.send(app.locals.urls)
 });
 
 app.listen(app.get('port'), () => {
@@ -37,7 +37,7 @@ app.post('/api/v1/urls', (request, response) => {
     });
   }
 
-  app.locals.urls[id] = url;
+  app.locals.urls.push({id: id, url: url});
 
   response.status(201).json({ id, url });
 });
