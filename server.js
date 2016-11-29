@@ -33,8 +33,7 @@ app.post('/api/v1/urls', (request, response) => {
   const { url } = request.body;
   const id = md5(url);
   const urlEncode = crc.crc24(url).toString(16);
-  const webhost = 'http://localhost:3000/';
-  const shortURL = webhost + 'api/v1/urls/' + urlEncode;
+  const shortURL = 'http://' + urlEncode;
 
   if (!url) {
     return response.status(422).send({
