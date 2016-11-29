@@ -4,7 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const md5 = require('md5');
 const crc = require('crc');
-const cors = require('cors')
+const cors = require('cors');
 // const mongoose = require('mongoose');
 // const MongoClient = require('mongodb').MongoClient;
 // const dbName = 'urlDB';
@@ -26,14 +26,14 @@ app.get('/api/v1/urls', (request, response) => {
   response.send(urls);
 });
 
-app.get('/api/v1/urls/:id', (request, response) => {
-  const { id } = request.params;
-  const url = app.locals.urls[id];
-
-  if (!url) { return response.sendStatus(404); }
-
-  response.send(app.locals.urls);
-});
+// app.get('/api/v1/urls/:id', (request, response) => {
+//   const { id } = request.params;
+//   const url = app.locals.urls[id];
+//
+//   if (!url) { return response.sendStatus(404); }
+//
+//   response.send(app.locals.urls);
+// });
 
 app.post('/api/v1/urls', (request, response) => {
   const { url } = request.body;
