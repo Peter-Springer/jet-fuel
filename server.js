@@ -15,8 +15,13 @@ app.get('/', (request, response) => {
 });
 
 app.get('/api/v1/urls', (request, response) => {
+  const urls = app.locals.urls;
+  response.send( urls );
+});
+
+app.get('/api/v1/urls/:id', (request, response) => {
   const { id } = request.params;
-  const url = app.locals.urls
+  const url = app.locals.urls[id];
 
   if (!url) { return response.sendStatus(404); }
 
@@ -40,4 +45,31 @@ app.post('/api/v1/urls', (request, response) => {
   app.locals.urls.push({id: id, url: url});
 
   response.status(201).json({ id, url });
+});
+
+app.put('/api/v1/urls/:id', (request, response) => {
+  const { id } = request.params;
+  const { url } = request.body;
+  const originalURL = app.locals.urls[id];
+
+  if (!originalURL) { return response.status(404); }
+
+  app.locals.urls[id] = url;
+
+  response.status(201).json({ id, url });
+});
+
+app.delete('/api/v1/urls/:id', (request, response) => {
+  const { id } = request.params;
+  const originalURL = app.locals.urls[id];
+
+  if (!originalURL) {
+    return response.status(422).send({
+      error: 'There is no url with that id'
+    });
+  }
+
+  delete app.locals.urls[id];
+
+  response.send('Url deleted');
 });
