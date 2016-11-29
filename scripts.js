@@ -5,7 +5,7 @@ $('.submit').on('click', function(e) {
   console.log('kirstennn')
   $.post( "http://localhost:3000/api/v1/urls",
     {
-      url: "www.google.com"
+      url: $('.url-component').val()
     })
   .done(function() {
     console.log( "success!");
