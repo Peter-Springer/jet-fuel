@@ -5,7 +5,7 @@ module.exports = {
  },
  output: {
    path: __dirname,
-   filename: '[name].bundle.js'
+   filename: 'views/[name].bundle.js'
  },
  module: {
    loaders: [
