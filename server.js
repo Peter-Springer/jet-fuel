@@ -1,22 +1,23 @@
+'use strict';
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const md5 = require('md5');
+const crc = require('crc');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.set('port', process.env.PORT || 3000);
 app.locals.title = 'URL Shortener';
 app.locals.urls = [];
 
 app.get('/', (request, response) => {
-  response.send('visit /api/v1/urls/:id to view single url');
+  response.send(app.locals.title);
 });
 
 app.get('/api/v1/urls', (request, response) => {
   const urls = app.locals.urls;
-  response.send( urls );
+  response.send(urls);
 });
 
 app.get('/api/v1/urls/:id', (request, response) => {
@@ -25,16 +26,15 @@ app.get('/api/v1/urls/:id', (request, response) => {
 
   if (!url) { return response.sendStatus(404); }
 
-  response.send(app.locals.urls)
-});
-
-app.listen(app.get('port'), () => {
-  console.log(`${app.locals.title} is running on ${app.get('port')}.`);
+  response.send(app.locals.urls);
 });
 
 app.post('/api/v1/urls', (request, response) => {
   const { url } = request.body;
   const id = md5(url);
+  const urlEncode = crc.crc24(url).toString(16);
+  const webhost = 'http://localhost:3000/';
+  const shortURL = webhost + 'api/v1/urls/' + urlEncode;
 
   if (!url) {
     return response.status(422).send({
@@ -42,9 +42,9 @@ app.post('/api/v1/urls', (request, response) => {
     });
   }
 
-  app.locals.urls.push({id: id, url: url});
+  app.locals.urls.push({id: id, url: url, shortURL: shortURL });
 
-  response.status(201).json({ id, url });
+  response.status(201).json({ id, url, shortURL });
 });
 
 app.put('/api/v1/urls/:id', (request, response) => {
@@ -72,4 +72,8 @@ app.delete('/api/v1/urls/:id', (request, response) => {
   delete app.locals.urls[id];
 
   response.send('Url deleted');
+});
+
+app.listen(app.get('port'), () => {
+  console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
