@@ -4,12 +4,13 @@ const app = express();
 const bodyParser = require('body-parser');
 const md5 = require('md5');
 const crc = require('crc');
+// const cors = require('express-cors')
 // const mongoose = require('mongoose');
 // const MongoClient = require('mongodb').MongoClient;
 // const dbName = 'urlDB';
 // const connectionString = 'mongodb://localhost:27017/' + dbName;
 // mongoose.connect(connectionString);
-
+// app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 3000);
