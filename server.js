@@ -4,6 +4,11 @@ const app = express();
 const bodyParser = require('body-parser');
 const md5 = require('md5');
 const crc = require('crc');
+// const mongoose = require('mongoose');
+// const MongoClient = require('mongodb').MongoClient;
+// const dbName = 'urlDB';
+// const connectionString = 'mongodb://localhost:27017/' + dbName;
+// mongoose.connect(connectionString);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

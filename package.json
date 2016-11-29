@@ -1,19 +1,20 @@
 {
-  "name": "jet-pack",
+  "name": "jet-fuel",
   "version": "1.0.0",
-  "description": "",
+  "description": "URL shortener with HHTP methods, Express, and Mongo",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
     "start": "webpack-dev-server --hot --inline",
-    "build": "webpack"
+    "build": "webpack",
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/swanie21/jet-pack.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Pete Springer and Kirsten Swanson",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/swanie21/jet-pack/issues"
@@ -25,7 +26,8 @@
     "crc": "^3.4.3",
     "express": "^4.14.0",
     "jquery": "^3.1.1",
-    "md5": "^2.2.1"
+    "md5": "^2.2.1",
+    "mongoose": "^4.7.0"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
@@ -35,6 +37,7 @@
     "mocha": "^3.2.0",
     "mocha-loader": "^1.0.0",
     "node-sass": "^3.13.0",
+    "nodemon": "^1.11.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.3",
