@@ -13,12 +13,12 @@ h1 {
   text-align: center;
 }
 
-form {
+form, .search-form {
   margin-top: 20px;
   text-align: center;
 }
 
-.url-component {
+.url-component, .search-input {
   background: #EEE;
   border: 2px solid darken($primary-dark-blue, 15%);
   border-radius: 5px;
