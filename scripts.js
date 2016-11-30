@@ -2,6 +2,12 @@ import $ from 'jquery'
 
 $('.submit').on('click', function(e) {
   e.preventDefault();
+  const url = $('.url-component').val();
+
+  if (!validUrl(url)) {
+  return alert('Please enter a valid URL address');
+}
+
   $.post("http://localhost:3000/api/v1/urls",
     {
       url: $('.url-component').val()
@@ -33,3 +39,20 @@ function template(link) {
 $('.sort').on('click', function() {
      console.log('wired up')
 })
+
+function validUrl(url) {
+  var urlTest = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+  return urlTest.test(url);
+}
+
+$('.search-input').keyup(function() {
+  var filter = $(this).val();
+  $('.url-info').each(function() {
+    if($(this).text().search(new RegExp(filter, 'i')) < 0) {
+      $(this).fadeOut();
+    }
+    else {
+      $(this).fadeIn();
+    }
+  });
+});
