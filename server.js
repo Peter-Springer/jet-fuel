@@ -39,7 +39,7 @@ app.post('/api/v1/urls', (request, response) => {
   const { url } = request.body;
   const id = md5(url);
   const urlEncode = crc.crc24(url).toString(16);
-  const shortURL = 'http://' + urlEncode;
+  let shortURL = 'http://' + urlEncode
 
   if (!url) {
     return response.status(422).send({
