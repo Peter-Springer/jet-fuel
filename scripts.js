@@ -37,16 +37,14 @@ function validUrl(url) {
   return urlTest.test(url);
 }
 
-$(document).ready(function() {
-  $('.search-input').keyup(function() {
-    var filter = $(this).val();
-    $('.url-info').each(function() {
-      if($(this).text().search(new RegExp(filter, 'i')) < 0) {
-        $(this).fadeOut();
-      }
-      else {
-        $(this).fadeIn();
-      }
-    });
+$('.search-input').keyup(function() {
+  var filter = $(this).val();
+  $('.url-info').each(function() {
+    if($(this).text().search(new RegExp(filter, 'i')) < 0) {
+      $(this).fadeOut();
+    }
+    else {
+      $(this).fadeIn();
+    }
   });
 });
