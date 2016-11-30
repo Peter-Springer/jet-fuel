@@ -9,10 +9,14 @@ $('.submit').on('click', function(e) {
         function() {
     console.log( "success!");
   });
+  $('.url-component').val('');
 });
 
 function renderURL() {
   $.get("http://localhost:3000/api/v1/urls").then((response) => {
-    $("#urls").append(response[response.length - 1].shortURL + '<br>');
+    var url = '<a class="result" href="' + response[response.length - 1].url + '">'
+                        + response[response.length - 1].shortURL +
+                     '</a>';
+    $("#urls").append(url);
   });
 }
