@@ -1,13 +1,18 @@
 import $ from 'jquery'
 
 $('.submit').on('click', function(e) {
-  e.preventDefault()
-  console.log('kirstennn')
-  $.post( "http://localhost:3000/api/v1/urls",
+  e.preventDefault();
+  $.post("http://localhost:3000/api/v1/urls",
     {
       url: $('.url-component').val()
-    })
-  .done(function() {
+    }).then(renderURL()).done(
+        function() {
     console.log( "success!");
   });
-})
+});
+
+function renderURL() {
+  $.get("http://localhost:3000/api/v1/urls").then((response) => {
+    $("#urls").append(response[0].shortURL);
+  });
+}
