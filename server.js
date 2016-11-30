@@ -26,20 +26,20 @@ app.get('/api/v1/urls', (request, response) => {
   response.send(urls);
 });
 
-// app.get('/api/v1/urls/:id', (request, response) => {
-//   const { id } = request.params;
-//   const url = app.locals.urls[id];
-//
-//   if (!url) { return response.sendStatus(404); }
-//
-//   response.send(app.locals.urls);
-// });
+app.get('/api/v1/urls/:id', (request, response) => {
+  const { id } = request.params;
+  const url = app.locals.urls[id];
+
+  if (!url) { return response.sendStatus(404); }
+
+  response.send(app.locals.urls);
+});
 
 app.post('/api/v1/urls', (request, response) => {
   const { url } = request.body;
   const id = md5(url);
   const urlEncode = crc.crc24(url).toString(16);
-  let shortURL = 'http://' + urlEncode
+  const shortURL = 'http://' + urlEncode;
 
   if (!url) {
     return response.status(422).send({

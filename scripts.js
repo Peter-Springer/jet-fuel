@@ -14,9 +14,9 @@ $('.submit').on('click', function(e) {
 
 function renderURL() {
   $.get("http://localhost:3000/api/v1/urls").then((response) => {
-    var url = '<a class="result" href="' + response[response.length - 1].url + '">'
-                        + response[response.length - 1].shortURL +
-                     '</a>';
+    var url = '<a class="result" href="' + 'http://' + response[response.length - 1].url + '">'
+                 + response[response.length - 1].shortURL +
+              '</a>';
     $("#urls").append(url);
   });
 }
