@@ -1,5 +1,4 @@
 import $ from 'jquery'
-import _ from 'lodash'
 
 $('.submit').on('click', function(e) {
   e.preventDefault();
@@ -19,10 +18,6 @@ function renderURL() {
   })
 }
 
-// let targetUrlIndex = response.length-1
-// template(response[targetUrlIndex])
-
-
 function template(link) {
   $("#urls").append(
     `<article class="url-info">
@@ -31,12 +26,10 @@ function template(link) {
     </a>
     <p>${link.date}</p>
     <p>Clicks: ${link.count}</p>
-    </article>`)
+    </article>`
+  )
 }
 
 $('.sort').on('click', function() {
-  $.get("http://localhost:3000/api/v1/urls").then((response) => {
-     var sorted = response.reverse()
-     console.log(sorted)
-  })
+     console.log('wired up')
 })
