@@ -13,6 +13,6 @@ $('.submit').on('click', function(e) {
 
 function renderURL() {
   $.get("http://localhost:3000/api/v1/urls").then((response) => {
-    $("#urls").append(response[0].shortURL);
+    $("#urls").append(response[response.length - 1].shortURL + '<br>');
   });
 }
