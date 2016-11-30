@@ -36,3 +36,17 @@ function validUrl(url) {
   var urlTest = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
   return urlTest.test(url);
 }
+
+$(document).ready(function() {
+  $('.search-input').keyup(function() {
+    var filter = $(this).val();
+    $('.url-info').each(function() {
+      if($(this).text().search(new RegExp(filter, 'i')) < 0) {
+        $(this).fadeOut();
+      }
+      else {
+        $(this).fadeIn();
+      }
+    });
+  });
+});
