@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import _ from 'lodash'
 
 $('.submit').on('click', function(e) {
   e.preventDefault();
@@ -14,14 +15,28 @@ $('.submit').on('click', function(e) {
 
 function renderURL() {
   $.get("http://localhost:3000/api/v1/urls").then((response) => {
-    var urlInfo = `<article class="url-info">
-                     <a class="result" target="_blank" href="${response[response.length - 1].url}">
-                       ${response[response.length - 1].shortURL}
-                     </a>
-                     <p>${response[response.length - 1].date}</p>
-                     <p>Clicks: ${response[response.length - 1].count}</p>
-                   </article>`
-
-    $("#urls").append(urlInfo);
-  });
+     template(response[response.length-1])
+  })
 }
+
+// let targetUrlIndex = response.length-1
+// template(response[targetUrlIndex])
+
+
+function template(link) {
+  $("#urls").append(
+    `<article class="url-info">
+    <a class="result" target="_blank" href="${link.url}">
+    ${link.shortURL}
+    </a>
+    <p>${link.date}</p>
+    <p>Clicks: ${link.count}</p>
+    </article>`)
+}
+
+$('.sort').on('click', function() {
+  $.get("http://localhost:3000/api/v1/urls").then((response) => {
+     var sorted = response.reverse()
+     console.log(sorted)
+  })
+})
