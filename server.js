@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const md5 = require('md5');
 const crc = require('crc');
 const cors = require('cors');
+const moment = require('moment')
 // const mongoose = require('mongoose');
 // const MongoClient = require('mongodb').MongoClient;
 // const dbName = 'urlDB';
@@ -26,20 +27,22 @@ app.get('/api/v1/urls', (request, response) => {
   response.send(urls);
 });
 
-// app.get('/api/v1/urls/:id', (request, response) => {
-//   const { id } = request.params;
-//   const url = app.locals.urls[id];
-//
-//   if (!url) { return response.sendStatus(404); }
-//
-//   response.send(app.locals.urls);
-// });
+app.get('/api/v1/urls/:id', (request, response) => {
+  const { id } = request.params;
+  const url = app.locals.urls[id];
+
+  if (!url) { return response.sendStatus(404); }
+
+  response.send(app.locals.urls);
+});
 
 app.post('/api/v1/urls', (request, response) => {
   const { url } = request.body;
   const id = md5(url);
   const urlEncode = crc.crc24(url).toString(16);
-  let shortURL = 'http://' + urlEncode
+  const shortURL = 'http://' + urlEncode;
+  const date = moment(Date.now()).format('MMM Do YYYY, h:mma');
+  const count = 0;
 
   if (!url) {
     return response.status(422).send({
@@ -47,7 +50,7 @@ app.post('/api/v1/urls', (request, response) => {
     });
   }
 
-  app.locals.urls.push({id: id, url: url, shortURL: shortURL });
+  app.locals.urls.push({id: id, url: url, shortURL: shortURL, date: date, count: count });
 
   response.status(201).json({ id, url, shortURL });
 });
