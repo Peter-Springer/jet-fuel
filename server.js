@@ -40,7 +40,7 @@ app.post('/api/v1/urls', (request, response) => {
   const { url } = request.body;
   const id = md5(url);
   const urlEncode = crc.crc24(url).toString(16);
-  const shortURL = 'http://' + urlEncode;
+  const shortURL = 'http://localhost:8080/views/' + urlEncode;
   const date = moment(Date.now()).format('MMM Do YYYY, h:mma');
   const count = 0;
 
