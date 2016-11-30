@@ -20,17 +20,25 @@ $('.submit').on('click', function(e) {
 
 function renderURL() {
   $.get("http://localhost:3000/api/v1/urls").then((response) => {
-    var urlInfo = `<article class="url-info">
-                     <a class="result" target="_blank" href="${response[response.length - 1].url}">
-                       ${response[response.length - 1].shortURL}
-                     </a>
-                     <p>${response[response.length - 1].date}</p>
-                     <p>Clicks: ${response[response.length - 1].count}</p>
-                   </article>`
-
-    $("#urls").append(urlInfo);
-  });
+     template(response[response.length-1])
+  })
 }
+
+function template(link) {
+  $("#urls").append(
+    `<article class="url-info">
+    <a class="result" target="_blank" href="${link.url}">
+    ${link.shortURL}
+    </a>
+    <p>${link.date}</p>
+    <p>Clicks: ${link.count}</p>
+    </article>`
+  )
+}
+
+$('.sort').on('click', function() {
+     console.log('wired up')
+})
 
 function validUrl(url) {
   var urlTest = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
