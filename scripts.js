@@ -14,11 +14,12 @@ $('.submit').on('click', function(e) {
 
 function renderURL() {
   $.get("http://localhost:3000/api/v1/urls").then((response) => {
-    var urlInfo = `<article>
-                     <a class="result" href="http://${response[response.length - 1].url}">
+    var urlInfo = `<article class="url-info">
+                     <a class="result" target="_blank" href="${response[response.length - 1].url}">
                        ${response[response.length - 1].shortURL}
                      </a>
-                     <h3>${response[response.length - 1].date}</h3>
+                     <p>${response[response.length - 1].date}</p>
+                     <p>Clicks: ${response[response.length - 1].count}</p>
                    </article>`
 
     $("#urls").append(urlInfo);
