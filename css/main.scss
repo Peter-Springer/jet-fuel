@@ -28,7 +28,7 @@ form, .search-form {
   width: 350px;
 }
 
-.submit-button, .sort-button {
+.submit-button, .sort-button-date, .sort-button-clicks {
   color: darken($primary-dark-blue, 35%);
   background: $gray-accent-color;
   border: 2px solid darken($primary-dark-blue, 35%);

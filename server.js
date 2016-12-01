@@ -36,11 +36,18 @@ app.get('/api/v1/urls/:id', (request, response) => {
   response.send(app.locals.urls);
 });
 
+app.get('/api/v1/urls/:shortURL', (request, response) => {
+  let targetUrl = app.locals.urls.filter((url) => url.shortURL === request.params.shortURL)[0];
+    if (!targetUrl) { response.send(`redirect failed!`);}
+    ++targetUrl.count;
+    response.redirect(targetUrl.url);
+});
+
 app.post('/api/v1/urls', (request, response) => {
   const { url } = request.body;
   const id = md5(url);
   const urlEncode = crc.crc24(url).toString(16);
-  const shortURL = 'http://localhost:8080/views/' + urlEncode;
+  const shortURL =  urlEncode;
   const date = moment(Date.now()).format('MMM Do YYYY, h:mma');
   const count = 0;
 

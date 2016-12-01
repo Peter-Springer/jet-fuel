@@ -1,14 +1,16 @@
 'use strict';
 import $ from 'jquery';
-let count = 0;
+import _ from 'lodash';
+let dateCounter = 0;
+let clicksCounter = 0;
 
 function renderLink(link) {
   return `
     <article class="url-info">
-      <a class="short-link" target="_blank" href="${link.url}">
-      ${link.shortURL}
+      <a class="short-link" href="http://localhost:3000/api/v1/urls/${link.shortURL}">
+      http://localhost:3000/api/v1/urls/${link.shortURL}
       </a>
-      <p>${link.date}</p>
+      <p class="date">${link.date}</p>
       <p>Clicks: ${link.count}</p>
     </article>
     `;
@@ -22,6 +24,17 @@ function reverseLinks(links) {
   return links.map(renderLink).reverse();
 }
 
+function sortedClicksAscending(links) {
+  let newCount = _.sortBy(links, ['count']);
+  let ascendingByClicks = newCount.reverse();
+  return ascendingByClicks.map(renderLink);
+}
+
+function sortedClicksDescending(links) {
+  let newCount = _.sortBy(links, ['count']);
+  return newCount.map(renderLink);
+}
+
 function addLinksToPage(links) {
   $('#urls').html(links);
 }
@@ -29,7 +42,7 @@ function addLinksToPage(links) {
 function fetchAllUrls() {
   $.get('http://localhost:3000/api/v1/urls')
   .then(renderLinks)
-  .then(addLinksToPage);
+    .then(addLinksToPage);
 }
 
 function validUrl(url) {
@@ -42,7 +55,7 @@ $('.submit-button').on('click', function(e) {
   const url = $('.url-component').val();
 
   if (!validUrl(url)) {
-  return alert('Please enter a valid URL address');
+  return alert('Please enter a valid URL address ex: http://website-here');
 }
 
   $.post('http://localhost:3000/api/v1/urls',
@@ -55,15 +68,28 @@ $('.submit-button').on('click', function(e) {
   $('.url-component').val('');
 });
 
-$('.sort-button').on('click', function() {
-  count +=1;
-  if (count % 2 !== 0) {
+$('.sort-button-date').on('click', function() {
+  dateCounter +=1;
+  if (dateCounter % 2 !== 0) {
     $.get('http://localhost:3000/api/v1/urls')
     .then(reverseLinks)
     .then(addLinksToPage);
   } else {
     $.get('http://localhost:3000/api/v1/urls')
     .then(renderLinks)
+    .then(addLinksToPage);
+  }
+});
+
+$('.sort-button-clicks').on('click', function() {
+    clicksCounter +=1;
+    if (clicksCounter % 2 !== 0) {
+    $.get('http://localhost:3000/api/v1/urls')
+    .then(sortedClicksAscending)
+    .then(addLinksToPage);
+  } else {
+    $.get('http://localhost:3000/api/v1/urls')
+    .then(sortedClicksDescending)
     .then(addLinksToPage);
   }
 });
@@ -79,7 +105,3 @@ $('.search-input').keyup(function() {
     }
   });
 });
-
-// $('.short-link').on('click', function() {
-//   $.put("http://localhost:3000/api/v1/urls")
-// })
