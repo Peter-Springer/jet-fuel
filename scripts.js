@@ -5,10 +5,10 @@ let count = 0;
 function renderLink(link) {
   return `
     <article class="url-info">
-      <a class="short-link" target="_blank" href="${link.url}">
-      ${link.shortURL}
+      <a class="short-link" href="http://localhost:3000/api/v1/urls/${link.shortURL}">
+      http://localhost:3000/api/v1/urls/${link.shortURL}
       </a>
-      <p>${link.date}</p>
+      <p class="date">${link.date}</p>
       <p>Clicks: ${link.count}</p>
     </article>
     `;
@@ -80,6 +80,22 @@ $('.search-input').keyup(function() {
   });
 });
 
-// $('.short-link').on('click', function() {
-//   $.put("http://localhost:3000/api/v1/urls")
-// })
+$('#urls').on('click', '.short-link', function() {
+  console.log('uo')
+  // let link = $('.short-link').text()
+  // console.log(link)
+  // $.get('http://localhost:3000/api/v1/urls',). (if response.shortURL !== 'hello') => {
+  //   return console.log('wowow')
+  // }
+})
+
+// getAllListings() {
+//   axios.get('http://localhost:8080/api/v1/listing', {
+//   })
+//   .then((response) => {
+//     this.updateState(response.data)
+//   })
+//   .catch(function () {
+//     console.log("request failed");
+//   });
+// }

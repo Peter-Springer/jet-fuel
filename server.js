@@ -27,20 +27,36 @@ app.get('/api/v1/urls', (request, response) => {
   response.send(urls);
 });
 
-app.get('/api/v1/urls/:id', (request, response) => {
-  const { id } = request.params;
-  const url = app.locals.urls[id];
+// app.get('/api/v1/urls/:id', (request, response) => {
+//   const { id } = request.params;
+//   const url = app.locals.urls[id];
+//
+//   if (!url) { return response.sendStatus(404); }
+//
+//   response.send(app.locals.urls);
+// });
 
-  if (!url) { return response.sendStatus(404); }
+app.get('/api/v1/urls/:shortURL', (request, response) => {
+  let targetUrl = app.locals.urls.filter((urlz) => urlz.shortURL === request.params.shortURL)[0]
+  console.log(request.params.shortURL)
+    if (!targetUrl) { response.send(`Please go away to somewhere that exists and never come back here.`)}
+    ++targetUrl.count
+    response.redirect( targetUrl.url )
+})
 
-  response.send(app.locals.urls);
-});
+// router.get('/:shortUrl', (request, response) => {
+//   let targetUrl = app.locals.urls.filter((url) => url.shortUrl===request.params.shortUrl)[0]
+//
+//   if (!targetUrl) { response.send(`Please go away to somewhere that exists and never come back here.`)}
+//   ++targetUrl.counter
+//   response.redirect( targetUrl.longUrl )
+// })
 
 app.post('/api/v1/urls', (request, response) => {
   const { url } = request.body;
   const id = md5(url);
   const urlEncode = crc.crc24(url).toString(16);
-  const shortURL = 'http://localhost:8080/views/' + urlEncode;
+  const shortURL =  urlEncode;
   const date = moment(Date.now()).format('MMM Do YYYY, h:mma');
   const count = 0;
 
