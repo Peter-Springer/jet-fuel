@@ -1,7 +1,6 @@
 module.exports = {
  entry: {
-   main: './index.js',
-  //  test: "mocha!./test/index.js"
+   main: './lib/index.js',
  },
  output: {
    path: __dirname,
