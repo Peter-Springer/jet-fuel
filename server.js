@@ -14,7 +14,7 @@ const moment = require('moment');
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set('port', process.env.PORT || 3000);
+const server = app.set('port', process.env.PORT || 3000);
 app.locals.title = 'URL Shortener';
 app.locals.urls = [];
 
@@ -83,3 +83,5 @@ app.delete('/api/v1/urls/:id', (request, response) => {
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
+
+module.exports = server;
