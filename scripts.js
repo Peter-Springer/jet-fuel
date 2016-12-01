@@ -37,7 +37,7 @@ function validUrl(url) {
   return urlTest.test(url);
 }
 
-$('.submit').on('click', function(e) {
+$('.submit-button').on('click', function(e) {
   e.preventDefault();
   const url = $('.url-component').val();
 
@@ -55,7 +55,7 @@ $('.submit').on('click', function(e) {
   $('.url-component').val('');
 });
 
-$('.sort').on('click', function() {
+$('.sort-button').on('click', function() {
   count +=1;
   if (count % 2 !== 0) {
     $.get('http://localhost:3000/api/v1/urls')
