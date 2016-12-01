@@ -27,29 +27,21 @@ app.get('/api/v1/urls', (request, response) => {
   response.send(urls);
 });
 
-// app.get('/api/v1/urls/:id', (request, response) => {
-//   const { id } = request.params;
-//   const url = app.locals.urls[id];
-//
-//   if (!url) { return response.sendStatus(404); }
-//
-//   response.send(app.locals.urls);
-// });
+app.get('/api/v1/urls/:id', (request, response) => {
+  const { id } = request.params;
+  const url = app.locals.urls[id];
+
+  if (!url) { return response.sendStatus(404); }
+
+  response.send(app.locals.urls);
+});
 
 app.get('/api/v1/urls/:shortURL', (request, response) => {
-  let targetUrl = app.locals.urls.filter((url) => url.shortURL === request.params.shortURL)[0]
-    if (!targetUrl) { response.send(`redirect failed!`)}
-    ++targetUrl.count
-    response.redirect( targetUrl.url )
-})
-
-// router.get('/:shortUrl', (request, response) => {
-//   let targetUrl = app.locals.urls.filter((url) => url.shortUrl===request.params.shortUrl)[0]
-//
-//   if (!targetUrl) { response.send(`Please go away to somewhere that exists and never come back here.`)}
-//   ++targetUrl.counter
-//   response.redirect( targetUrl.longUrl )
-// })
+  let targetUrl = app.locals.urls.filter((url) => url.shortURL === request.params.shortURL)[0];
+    if (!targetUrl) { response.send(`redirect failed!`);}
+    ++targetUrl.count;
+    response.redirect(targetUrl.url);
+});
 
 app.post('/api/v1/urls', (request, response) => {
   const { url } = request.body;
