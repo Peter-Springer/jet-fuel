@@ -13,12 +13,18 @@ h1 {
   text-align: center;
 }
 
-form, .search-form {
+form {
   margin-top: 20px;
   text-align: center;
 }
 
-.url-component, .search-input {
+.search-form {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.url-component {
   background: #EEE;
   border: 2px solid darken($primary-dark-blue, 15%);
   border-radius: 5px;
@@ -28,7 +34,16 @@ form, .search-form {
   width: 350px;
 }
 
-.submit-button, .sort-button-date, .sort-button-clicks {
+.search-input {
+  background: #EEE;
+  border: 2px solid darken($primary-dark-blue, 15%);
+  border-radius: 5px;
+  font-family: $font-open-sans;
+  font-size: 18px;
+  padding: 8px;
+}
+
+.submit-button, .sort-button-date, .sort-clicks-button {
   color: darken($primary-dark-blue, 35%);
   background: $gray-accent-color;
   border: 2px solid darken($primary-dark-blue, 35%);
