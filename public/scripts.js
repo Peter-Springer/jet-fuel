@@ -1,6 +1,4 @@
 'use strict';
-import $ from 'jquery';
-import _ from 'lodash';
 let dateCounter = 0;
 let clicksCounter = 0;
 
@@ -51,7 +49,6 @@ function validUrl(url) {
 }
 
 $('.submit-button').on('click', function(e) {
-  e.preventDefault();
   const url = $('.url-component').val();
 
   if (!validUrl(url)) {

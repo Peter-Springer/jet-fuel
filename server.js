@@ -8,14 +8,19 @@ const cors = require('cors');
 const moment = require('moment');
 
 app.use(cors());
+app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const server = app.set('port', process.env.PORT || 3000);
 app.locals.title = 'URL Shortener';
 app.locals.urls = [];
 
+// app.get('/', (request, response) => {
+//   response.send(app.locals.title);
+// });
+
 app.get('/', (request, response) => {
-  response.send(app.locals.title);
+  response.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 app.get('/api/v1/urls', (request, response) => {
