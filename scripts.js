@@ -7,7 +7,7 @@ let clicksCounter = 0;
 function renderLink(link) {
   return `
     <article class="url-info">
-      <a class="short-link" href="http://localhost:3000/api/v1/urls/${link.shortURL}">
+      <a class="short-link" target="_blank" href="http://localhost:3000/api/v1/urls/${link.shortURL}">
       http://localhost:3000/api/v1/urls/${link.shortURL}
       </a>
       <p class="date">${link.date}</p>
@@ -81,7 +81,7 @@ $('.sort-button-date').on('click', function() {
   }
 });
 
-$('.sort-button-clicks').on('click', function() {
+$('.sort-clicks-button').on('click', function() {
     clicksCounter +=1;
     if (clicksCounter % 2 !== 0) {
     $.get('http://localhost:3000/api/v1/urls')
