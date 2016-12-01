@@ -37,9 +37,8 @@ app.get('/api/v1/urls', (request, response) => {
 // });
 
 app.get('/api/v1/urls/:shortURL', (request, response) => {
-  let targetUrl = app.locals.urls.filter((urlz) => urlz.shortURL === request.params.shortURL)[0]
-  console.log(request.params.shortURL)
-    if (!targetUrl) { response.send(`Please go away to somewhere that exists and never come back here.`)}
+  let targetUrl = app.locals.urls.filter((url) => url.shortURL === request.params.shortURL)[0]
+    if (!targetUrl) { response.send(`redirect failed!`)}
     ++targetUrl.count
     response.redirect( targetUrl.url )
 })
