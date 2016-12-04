@@ -1,8 +1,14 @@
 'use strict';
 let dateCounter = 0;
 let clicksCounter = 0;
+// const xhr = new XMLHttpRequest();
+const submitButton = document.querySelector('.submit-button');
+const urlComponent = document.querySelector('.url-component');
+const searchInput = document.querySelector('.search-input');
+const urlInfo = document.querySelector('.url-info');
 
 function renderLink(link) {
+  debugger;
   return `
     <article class="url-info">
       <a class="short-link" target="_blank" href="http://localhost:3000/api/v1/urls/${link.shortURL}">
@@ -14,8 +20,12 @@ function renderLink(link) {
     `;
 }
 
-function renderLinks(links) {
-  return links.map(renderLink);
+function renderLinks() {
+  console.log(this)
+  // debugger;
+  let links = JSON.parse(this.response)
+  //  links.map(renderLink);
+   addLinksToPage(links.map(renderLink));
 }
 
 function reverseLinks(links) {
@@ -34,13 +44,17 @@ function sortedClicksDescending(links) {
 }
 
 function addLinksToPage(links) {
-  $('#urls').html(links);
+  document.querySelector('#urls').innerHTML = links;
 }
 
 function fetchAllUrls() {
-  $.get('http://localhost:3000/api/v1/urls')
-  .then(renderLinks)
-    .then(addLinksToPage);
+  // $.get('http://localhost:3000/api/v1/urls')
+  // .then(renderLinks)
+  //   .then(addLinksToPage);
+  let xhr = new XMLHttpRequest();
+  xhr.addEventListener('load', renderLinks);
+  xhr.open('GET', '/api/v1/urls');
+  xhr.send();
 }
 
 function validUrl(url) {
@@ -48,22 +62,40 @@ function validUrl(url) {
   return urlTest.test(url);
 }
 
-$('.submit-button').on('click', function(e) {
-  const url = $('.url-component').val();
+function callBackResponse() {
+  fetchAllUrls();
+  // console.log(this)
+}
+
+submitButton.addEventListener('click', function(e) {
+  e.preventDefault();
+  let url = JSON.stringify({url: urlComponent.value});
 
   if (!validUrl(url)) {
   return alert('Please enter a valid URL address ex: http://website-here');
 }
+  let xhr = new XMLHttpRequest();
+  xhr.addEventListener('load', callBackResponse);
+  xhr.open('POST', '/api/v1/urls', true);
+  xhr.setRequestHeader("Content-type", "application/json");
 
-  $.post('http://localhost:3000/api/v1/urls',
-    {
-      url: $('.url-component').val()
-    }).then(fetchAllUrls()).done(
-        function() {
-    console.log('success!');
-  });
-  $('.url-component').val('');
+  xhr.send(url);
+  // $.post('http://localhost:3000/api/v1/urls',
+  //   {
+  //     url: $('.url-component').val()
+  //   }).then(fetchAllUrls()).done(
+  //       function() {
+  //   console.log('success!');
+  // });
+  urlComponent.value = '';
 });
+
+// $("input").keyup(function(){
+//     var txt = $("input").val();
+//     $.post("demo_ajax_gethint.asp", {suggest: txt}, function(result){
+//         $("span").html(result);
+//     });
+// });
 
 $('.sort-button-date').on('click', function() {
   dateCounter +=1;
@@ -91,14 +123,14 @@ $('.sort-clicks-button').on('click', function() {
   }
 });
 
-$('.search-input').keyup(function() {
-  var filter = $(this).val();
-  $('.url-info').each(function() {
-    if($(this).text().search(new RegExp(filter, 'i')) < 0) {
-      $(this).fadeOut();
+searchInput.addEventListener('keyup', (function() {
+  var filter = this.value;
+  urlInfo.each(function() {
+    if(this.text.search(new RegExp(filter, 'i')) < 0) {
+      this.style.visibility = 'hidden';
     }
     else {
-      $(this).fadeIn();
+      this.style.visibility = 'visible';
     }
   });
-});
+}));

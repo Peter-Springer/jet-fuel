@@ -36,6 +36,7 @@ app.get('/api/v1/urls/:shortURL', (request, response) => {
 });
 
 app.post('/api/v1/urls', (request, response) => {
+  console.log(request.body)
   const { url } = request.body;
   const id = md5(url);
   const urlEncode = crc.crc24(url).toString(16);
